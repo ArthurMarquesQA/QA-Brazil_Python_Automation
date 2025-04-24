@@ -1,0 +1,157 @@
+#import
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+import helpers
+from helpers import retrieve_phone_code
+import time
+
+# Definição da classe da página, dos localizadores e do método na classe
+class UrbanRoutesPage:
+    # Localizadores como atributos de classe
+
+    #Endereço De e Para
+    FROM_FIELD = (By.ID, 'from') #Endereço DE
+    TO_FIELD = (By.ID, 'to') #Endereço PARA
+
+    #Selecionar tarifa e chamar taxi
+    TAXI_OPTION_LOCATOR = (By.XPATH, '//button[contains(text(),"Chamar")]')#Chamar taxi depois da localização
+    COMFORT_ICON_LOCATOR = (By.XPATH, '//img[@src="/static/media/kids.075fd8d4.svg"]')#Icone do Comfort
+    COMFORT_TEXT_LOCATOR = (By.XPATH, '//div[contains(text(),"Comfort")]')#Clicar em Comfort
+
+    #Numero de Telefone
+    NUMBER_TEXT_LOCATOR = (By.CSS_SELECTOR, '.np-button')#Telefone
+    NUMBER_DIGITAR = (By.ID, 'phone')
+    NUMBER_CONFIRM = (By.CSS_SELECTOR, '.button.full')
+    NUMBER_CLOSE = (By.XPATH, '//div[class="close-button section-close"]')
+    NUMBER_CODE = (By.ID, 'code')
+    CODE_CONFIRM = (By.XPATH, '//*[@id="root"]/div/div[1]/div[2]/div[2]/form/div[2]/button[1]')
+
+    #METODO DE PAGAMENTO
+    ADD_METODO_PAGAMENTO = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[2]')#Botão de adicionar metodo de pagamento
+    ADD_CARTAO = (By.CSS_SELECTOR, '.pp-plus')#Adicionar cartão no metodo de pagamento
+    NUMERO_DO_CARTAO = (By.ID, 'number')#Numero do cartão
+    CODIGO_DO_CARTAO = (By.CSS_SELECTOR, 'input.card-input#code')#Codigo de 2 digitos
+    ADD_FINISH_CARTAO = (By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div[2]/form/div[3]/button[1]')#Adicionar o cartão
+    CLOSE_BUTTON_CARTAO = (By.CSS_SELECTOR,'.payment-picker.open .close-button')#Fechar o metodo de pagamento
+
+    #ADICIONAR COMENTARIO
+    ADD_COMENTARIO = (By.ID, 'comment')#Adicionar comentário
+    SWITCH_COBERTOR = (By.CSS_SELECTOR,'.switch')#Botão do Switch
+    SWITCH_COBERTOR_ON = (By.XPATH,'//div[class="slider round"]')#Procurar o status true or false
+    ADD_SORVETE = (By.CSS_SELECTOR, '.counter-plus')#Adiciona Sorvete
+    QNT_SORVETE = (By.CSS_SELECTOR, '.counter-value')#Quantidade de Sorvete
+    CALL_TAXI_BUTTON = (By.CSS_SELECTOR,'.smart-button')#Botão de chamar o taxi
+
+    def __init__(self, driver):
+        self.driver = driver
+
+#Locais "De" e "Para"
+    def enter_from_location(self, from_text):
+        WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located(self.FROM_FIELD))
+        self.driver.find_element(*self.FROM_FIELD).send_keys(from_text)
+
+    def enter_to_location(self, to_text):
+        WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located(self.TO_FIELD))
+        self.driver.find_element(*self.TO_FIELD).send_keys(to_text)
+
+    def enter_locations(self, from_text, to_text):
+        self.enter_from_location(from_text)
+        self.enter_to_location(to_text)
+
+    def get_from_location_value(self):
+            return WebDriverWait(self.driver, 3).until(
+                EC.visibility_of_element_located(self.FROM_FIELD)
+            ).get_attribute('value')
+
+    def get_to_location_value(self):
+            return WebDriverWait(self.driver, 3).until(
+                EC.visibility_of_element_located(self.TO_FIELD)
+            ).get_attribute('value')
+
+#Clicar em Chamar Táxi
+    def click_taxi_option(self):
+        self.driver.find_element(*self.TAXI_OPTION_LOCATOR).click()
+
+#Clicar em Comfort
+    def click_comfort_icon(self):
+        self.driver.find_element(*self.COMFORT_ICON_LOCATOR).click()
+
+    def click_comfort_text(self):
+        self.driver.find_element(*self.COMFORT_TEXT_LOCATOR).click()
+
+#Clicar no número
+    def click_number(self):
+        self.driver.find_element(*self.NUMBER_TEXT_LOCATOR).click()
+
+#Digitar o número
+    def click_number_text(self, telefone):
+        self.driver.find_element(*self.NUMBER_DIGITAR).send_keys(telefone)
+
+#Confirmar o numero de telefone
+    def click_number_confirm(self):
+        self.driver.find_element(*self.NUMBER_CONFIRM).click()
+
+#Escrever o codigo do numero
+    def get_number_code(self):
+        code = helpers.retrieve_phone_code(self.driver)
+        code_input = WebDriverWait(self.driver, 3).until(
+            EC.visibility_of_element_located(self.NUMBER_CODE)
+        )
+        code_input.clear()
+        code_input.send_keys(code)
+
+#Confirmar o codigo do numero
+    def code_confirm(self):
+        self.driver.find_element(*self.CODE_CONFIRM).click()
+
+#Fechar a tela do numero
+    def number_close(self):
+        self.driver.find_element(*self.NUMBER_CLOSE).click()
+
+#Botão metodo de pagamento
+    def click_add_metodo(self):
+        self.driver.find_element(*self.ADD_METODO_PAGAMENTO).click()
+
+#Botão de adicionar o cartão como metodo de pagamento
+    def click_add_cartao(self):
+        self.driver.find_element(*self.ADD_CARTAO).click()
+
+#Numero de cartão
+    def add_numero_cartao(self, cartao):
+        self.driver.find_element(*self.NUMERO_DO_CARTAO).send_keys(cartao)
+
+#Codigo do cartão
+    def add_code_cartao(self, code):
+        self.driver.find_element(*self.CODIGO_DO_CARTAO).send_keys(code)
+
+#Botão de adicionar FINAL o cartão dentro do metodo de pagamento
+    def finish_cartao(self):
+        self.driver.find_element(*self.ADD_FINISH_CARTAO).click()
+
+#Botão de fechar o metodo de pagamento
+    def close_metodo(self):
+        self.driver.find_element(*self.CLOSE_BUTTON_CARTAO).click()
+
+#Adicionar comentario
+    def add_comentario(self, comentario):
+        self.driver.find_element(*self.ADD_COMENTARIO).send_keys(comentario)
+
+#Switch do cobertor
+    def switch_cobertor(self):
+        self.driver.find_element(*self.SWITCH_COBERTOR).click()
+
+#Adicionar sorvete
+    def add_ice(self):
+        self.driver.find_element(*self.ADD_SORVETE).click()
+
+#Quantidade de sorvete
+    def qnt_sorvete(self):
+        return self.driver.find_element(*self.QNT_SORVETE).text
+
+#Finalizar e chamar o taxi
+    def call_taxi(self):
+        self.driver.find_element(*self.CALL_TAXI_BUTTON).click()
+

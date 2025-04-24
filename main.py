@@ -1,61 +1,145 @@
 #Tarefa 3
+from pages import UrbanRoutesPage
+from selenium.webdriver import Chrome
 import data
 import helpers
+import time
+
 
 class TestUrbanRoutes:
     @classmethod
+    def setup_class(cls): #Tarefa 4     # não modifique, pois precisamos do registro adicional habilitado para recuperar o código de confirmação do telefone
+        # não modifique, pois precisamos do registro adicional habilitado para recuperar o código de confirmação do telefone
+        from selenium.webdriver import DesiredCapabilities
+        capabilities = DesiredCapabilities.CHROME
+        capabilities["goog:loggingPrefs"] = {'performance': 'ALL'}
+        cls.driver = Chrome()
+        cls.driver.implicitly_wait(5)
 
-    def setup_class(cls): #Tarefa 4 
-        if helpers.is_url_reachable(data.URBAN_ROUTES_URL) == True: #Verifica se retorna True, como conectado no servidor
+        if helpers.is_url_reachable(data.URBAN_ROUTES_URL): #Verifica se retorna True, como conectado no servidor
             print("Conectado ao servidor Urban Routes")
         else: # Se retorna False não está conectado
             print("Não foi possível conectar ao Urban Routes. Verifique se o servidor está ligado e ainda em execução.")
-    pass
 
     def test_set_route(self):
+        self.driver.get(data.URBAN_ROUTES_URL)
+        routes_page = UrbanRoutesPage(self.driver)
+        time.sleep(2)
+        routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
+        time.sleep(2)
+        assert routes_page.get_from_location_value() == data.ADDRESS_FROM
+        assert routes_page.get_to_location_value() == data.ADDRESS_TO
 
-    # Adicionar em S8
-    print("função criada para definir a rota")
-    pass
 
     def test_select_plan(self):
+        self.driver.get(data.URBAN_ROUTES_URL)
+        routes_page = UrbanRoutesPage(self.driver)
+        routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
+        time.sleep(2)
+        routes_page.click_taxi_option()
+        routes_page.click_comfort_icon()
+        time.sleep(2)
 
-    # Adicionar em S8
-    print("função criada para selecionar o plano")
-    pass
 
     def test_fill_phone_number(self):
-
-    # Adicionar em S8
-    print("função criada para verificar o numero de telefone")
-    pass
+        self.driver.get(data.URBAN_ROUTES_URL)
+        routes_page = UrbanRoutesPage(self.driver)
+        routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
+        time.sleep(2)
+        routes_page.click_taxi_option()
+        routes_page.click_comfort_icon()
+        time.sleep(2)
+        routes_page.click_number()
+        time.sleep(2)
+        routes_page.click_number_text(data.PHONE_NUMBER)
+        time.sleep(2)
+        routes_page.click_number_confirm()
+        time.sleep(2)
+        routes_page.get_number_code()
+        time.sleep(2)
+        routes_page.code_confirm()
+        time.sleep(2)
 
     def test_fill_card(self):
+        self.driver.get(data.URBAN_ROUTES_URL)
+        routes_page = UrbanRoutesPage(self.driver)
+        routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
+        time.sleep(2)
+        routes_page.click_taxi_option()
+        routes_page.click_comfort_icon()
+        time.sleep(2)
+        routes_page.click_add_metodo()
+        time.sleep(2)
+        routes_page.click_add_cartao()
+        time.sleep(2)
+        routes_page.add_numero_cartao(data.CARD_NUMBER)
+        routes_page.add_code_cartao(data.CARD_CODE)
+        time.sleep(2)
+        routes_page.finish_cartao()
+        time.sleep(2)
+        routes_page.close_metodo()
+        time.sleep(2)
 
-    # Adicionar em S8
-    print("função criada para verificar o card do usuario")
-    pass
 
     def test_comment_for_driver(self):
+        self.driver.get(data.URBAN_ROUTES_URL)
+        routes_page = UrbanRoutesPage(self.driver)
+        routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
+        time.sleep(2)
+        routes_page.click_taxi_option()
+        routes_page.click_comfort_icon()
+        time.sleep(2)
+        routes_page.add_comentario(data.MESSAGE_FOR_DRIVER)
+        time.sleep(2)
 
-    # Adicionar em S8
-    print("função criada para comentario para o motorista")
-    pass
 
     def test_order_blanket_and_handkerchiefs(self):
+        self.driver.get(data.URBAN_ROUTES_URL)
+        routes_page = UrbanRoutesPage(self.driver)
+        routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
+        time.sleep(2)
+        routes_page.click_taxi_option()
+        routes_page.click_comfort_icon()
+        time.sleep(2)
+        routes_page.switch_cobertor()
+        time.sleep(2)
 
-    # Adicionar em S8
-    print("função criada para o pedir um lenço")
-    pass
+    def test_order_2_ice_creams(self):  # Tarefa 5
+        self.driver.get(data.URBAN_ROUTES_URL)
+        routes_page = UrbanRoutesPage(self.driver)
+        routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
+        time.sleep(2)
+        routes_page.click_taxi_option()
+        routes_page.click_comfort_icon()
+        time.sleep(2)
 
-    def test_order_2_ice_creams(self): #Tarefa 5
-    for test_order_2_ice_creams in range(2): #Intera o ciclo 2 vezes
-    # Adicionar em S8
-    print("função criada para pedir sorvetes")
-    pass
+        for _ in range(2):  # Loop dentro do método
+            routes_page.add_ice()  # Chamada correta do método de instância
+            time.sleep(2)
 
+        assert int(routes_page.qnt_sorvete()) == 2  # Verificação correta do atributo
     def test_car_search_model_appears(self):
+        self.driver.get(data.URBAN_ROUTES_URL)
+        routes_page = UrbanRoutesPage(self.driver)
+        routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
+        time.sleep(2)
+        routes_page.click_taxi_option()
+        routes_page.click_comfort_icon()
+        time.sleep(2)
+        time.sleep(2)
+        routes_page.click_number()
+        time.sleep(2)
+        routes_page.click_number_text(data.PHONE_NUMBER)
+        time.sleep(2)
+        routes_page.click_number_confirm()
+        time.sleep(2)
+        routes_page.get_number_code()
+        time.sleep(2)
+        routes_page.code_confirm()
+        time.sleep(2)
+        routes_page.call_taxi()
+        time.sleep(2)
 
-    # Adicionar em S8
-    print("função criada para os modelos de carros disponiveis")
-    pass
+    @classmethod
+    def teardown_class(cls):
+        cls.driver.quit()
