@@ -45,100 +45,65 @@ class TestUrbanRoutes:
         self.driver.get(data.URBAN_ROUTES_URL)
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
-        time.sleep(2)
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
-        time.sleep(2)
-        routes_page.click_number()
-        time.sleep(2)
         routes_page.click_number_text(data.PHONE_NUMBER)
-        time.sleep(2)
-        routes_page.click_number_confirm()
-        time.sleep(2)
-        routes_page.get_number_code()
-        time.sleep(2)
-        routes_page.code_confirm()
-        time.sleep(2)
+
 
     def test_fill_card(self):
         self.driver.get(data.URBAN_ROUTES_URL)
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
-        time.sleep(2)
+        time.sleep(1)
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
-        time.sleep(2)
-        routes_page.click_add_metodo()
-        time.sleep(2)
-        routes_page.click_add_cartao()
-        time.sleep(2)
-        routes_page.add_numero_cartao(data.CARD_NUMBER)
-        routes_page.add_code_cartao(data.CARD_CODE)
-        time.sleep(2)
-        routes_page.finish_cartao()
-        time.sleep(2)
-        routes_page.close_metodo()
-        time.sleep(2)
+        time.sleep(1)
+        routes_page.click_add_cartao(data.CARD_NUMBER,data.CARD_CODE)
+
 
 
     def test_comment_for_driver(self):
         self.driver.get(data.URBAN_ROUTES_URL)
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
-        time.sleep(2)
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
-        time.sleep(2)
         routes_page.add_comentario(data.MESSAGE_FOR_DRIVER)
-        time.sleep(2)
+
 
 
     def test_order_blanket_and_handkerchiefs(self):
         self.driver.get(data.URBAN_ROUTES_URL)
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
-        time.sleep(2)
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
-        time.sleep(2)
         routes_page.switch_cobertor()
-        time.sleep(2)
+
 
     def test_order_2_ice_creams(self):  # Tarefa 5
         self.driver.get(data.URBAN_ROUTES_URL)
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
-        time.sleep(2)
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
-        time.sleep(2)
 
         for _ in range(2):  # Loop dentro do método
             routes_page.add_ice()  # Chamada correta do método de instância
-            time.sleep(2)
 
         assert int(routes_page.qnt_sorvete()) == 2  # Verificação correta do atributo
+
     def test_car_search_model_appears(self):
         self.driver.get(data.URBAN_ROUTES_URL)
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
-        time.sleep(2)
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
-        time.sleep(2)
-        time.sleep(2)
-        routes_page.click_number()
-        time.sleep(2)
         routes_page.click_number_text(data.PHONE_NUMBER)
-        time.sleep(2)
-        routes_page.click_number_confirm()
-        time.sleep(2)
-        routes_page.get_number_code()
-        time.sleep(2)
-        routes_page.code_confirm()
-        time.sleep(2)
+        time.sleep(1)
+        routes_page.click_add_cartao(data.CARD_NUMBER, data.CARD_CODE)
+        time.sleep(1)
         routes_page.call_taxi()
-        time.sleep(2)
 
     @classmethod
     def teardown_class(cls):

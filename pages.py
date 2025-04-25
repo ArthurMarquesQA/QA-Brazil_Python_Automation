@@ -2,7 +2,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-import helpers
 from helpers import retrieve_phone_code
 import time
 
@@ -23,22 +22,21 @@ class UrbanRoutesPage:
     NUMBER_TEXT_LOCATOR = (By.CSS_SELECTOR, '.np-button')#Telefone
     NUMBER_DIGITAR = (By.ID, 'phone')
     NUMBER_CONFIRM = (By.CSS_SELECTOR, '.button.full')
-    NUMBER_CLOSE = (By.XPATH, '//div[class="close-button section-close"]')
     NUMBER_CODE = (By.ID, 'code')
-    CODE_CONFIRM = (By.XPATH, '//*[@id="root"]/div/div[1]/div[2]/div[2]/form/div[2]/button[1]')
+    CODE_CONFIRM = (By.XPATH, '//button[contains(text(),"Confirma")]')
 
     #METODO DE PAGAMENTO
-    ADD_METODO_PAGAMENTO = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[2]')#Botão de adicionar metodo de pagamento
+    ADD_METODO_PAGAMENTO = (By.CSS_SELECTOR, '.pp-button.filled')#Botão de adicionar metodo de pagamento
     ADD_CARTAO = (By.CSS_SELECTOR, '.pp-plus')#Adicionar cartão no metodo de pagamento
     NUMERO_DO_CARTAO = (By.ID, 'number')#Numero do cartão
     CODIGO_DO_CARTAO = (By.CSS_SELECTOR, 'input.card-input#code')#Codigo de 2 digitos
-    ADD_FINISH_CARTAO = (By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div[2]/form/div[3]/button[1]')#Adicionar o cartão
+    ADD_FINISH_CARTAO = (By.XPATH, '//button[contains(text(),"Adicionar")]')#Adicionar o cartão
     CLOSE_BUTTON_CARTAO = (By.CSS_SELECTOR,'.payment-picker.open .close-button')#Fechar o metodo de pagamento
 
     #ADICIONAR COMENTARIO
     ADD_COMENTARIO = (By.ID, 'comment')#Adicionar comentário
     SWITCH_COBERTOR = (By.CSS_SELECTOR,'.switch')#Botão do Switch
-    SWITCH_COBERTOR_ON = (By.XPATH,'//div[class="slider round"]')#Procurar o status true or false
+    SWITCH_COBERTOR_ON = (By.XPATH,'//div[@class="slider round"]')#Procurar o status true or false
     ADD_SORVETE = (By.CSS_SELECTOR, '.counter-plus')#Adiciona Sorvete
     QNT_SORVETE = (By.CSS_SELECTOR, '.counter-value')#Quantidade de Sorvete
     CALL_TAXI_BUTTON = (By.CSS_SELECTOR,'.smart-button')#Botão de chamar o taxi
@@ -82,57 +80,34 @@ class UrbanRoutesPage:
     def click_comfort_text(self):
         self.driver.find_element(*self.COMFORT_TEXT_LOCATOR).click()
 
-#Clicar no número
-    def click_number(self):
-        self.driver.find_element(*self.NUMBER_TEXT_LOCATOR).click()
-
 #Digitar o número
     def click_number_text(self, telefone):
-        self.driver.find_element(*self.NUMBER_DIGITAR).send_keys(telefone)
+        self.driver.find_element(*self.NUMBER_TEXT_LOCATOR).click() #Clica no número
 
-#Confirmar o numero de telefone
-    def click_number_confirm(self):
-        self.driver.find_element(*self.NUMBER_CONFIRM).click()
+        self.driver.find_element(*self.NUMBER_DIGITAR).send_keys(telefone)  #Digita o número
 
-#Escrever o codigo do numero
-    def get_number_code(self):
-        code = helpers.retrieve_phone_code(self.driver)
+        self.driver.find_element(*self.NUMBER_CONFIRM).click() #Confirma o número
+
+        code = retrieve_phone_code(self.driver) #Digita o código
         code_input = WebDriverWait(self.driver, 3).until(
             EC.visibility_of_element_located(self.NUMBER_CODE)
         )
         code_input.clear()
         code_input.send_keys(code)
 
-#Confirmar o codigo do numero
-    def code_confirm(self):
-        self.driver.find_element(*self.CODE_CONFIRM).click()
+        self.driver.find_element(*self.CODE_CONFIRM).click()#Confirma
 
-#Fechar a tela do numero
-    def number_close(self):
-        self.driver.find_element(*self.NUMBER_CLOSE).click()
 
 #Botão metodo de pagamento
-    def click_add_metodo(self):
+    def click_add_cartao(self,cartao,code):
         self.driver.find_element(*self.ADD_METODO_PAGAMENTO).click()
-
-#Botão de adicionar o cartão como metodo de pagamento
-    def click_add_cartao(self):
         self.driver.find_element(*self.ADD_CARTAO).click()
-
-#Numero de cartão
-    def add_numero_cartao(self, cartao):
+        time.sleep(1)
         self.driver.find_element(*self.NUMERO_DO_CARTAO).send_keys(cartao)
-
-#Codigo do cartão
-    def add_code_cartao(self, code):
+        time.sleep(1)
         self.driver.find_element(*self.CODIGO_DO_CARTAO).send_keys(code)
-
-#Botão de adicionar FINAL o cartão dentro do metodo de pagamento
-    def finish_cartao(self):
+        time.sleep(1)
         self.driver.find_element(*self.ADD_FINISH_CARTAO).click()
-
-#Botão de fechar o metodo de pagamento
-    def close_metodo(self):
         self.driver.find_element(*self.CLOSE_BUTTON_CARTAO).click()
 
 #Adicionar comentario
