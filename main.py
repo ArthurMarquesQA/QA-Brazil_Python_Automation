@@ -59,7 +59,7 @@ class TestUrbanRoutes:
         routes_page.click_comfort_icon()
         time.sleep(1)
         routes_page.click_add_cartao(data.CARD_NUMBER,data.CARD_CODE)
-
+        assert "Cartão" in routes_page.confirm_cartao() #Acresentado o assert para confirmar o cartão
 
 
     def test_comment_for_driver(self):

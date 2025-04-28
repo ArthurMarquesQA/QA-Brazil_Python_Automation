@@ -23,7 +23,7 @@ class UrbanRoutesPage:
     NUMBER_DIGITAR = (By.ID, 'phone')
     NUMBER_CONFIRM = (By.CSS_SELECTOR, '.button.full')
     NUMBER_CODE = (By.ID, 'code')
-    CODE_CONFIRM = (By.XPATH, '//button[contains(text(),"Confirma")]')
+    CODE_CONFIRM = (By.XPATH, '//button[contains(text(),"Confirmar")]')
 
     #METODO DE PAGAMENTO
     ADD_METODO_PAGAMENTO = (By.CSS_SELECTOR, '.pp-button.filled')#Botão de adicionar metodo de pagamento
@@ -32,6 +32,7 @@ class UrbanRoutesPage:
     CODIGO_DO_CARTAO = (By.CSS_SELECTOR, 'input.card-input#code')#Codigo de 2 digitos
     ADD_FINISH_CARTAO = (By.XPATH, '//button[contains(text(),"Adicionar")]')#Adicionar o cartão
     CLOSE_BUTTON_CARTAO = (By.CSS_SELECTOR,'.payment-picker.open .close-button')#Fechar o metodo de pagamento
+    CONFIRM_CARTAO = (By.CSS_SELECTOR,'.pp-value-text')#Conferir se o valor mudou de Dinheiro para Cartão
 
     #ADICIONAR COMENTARIO
     ADD_COMENTARIO = (By.ID, 'comment')#Adicionar comentário
@@ -98,6 +99,7 @@ class UrbanRoutesPage:
         self.driver.find_element(*self.CODE_CONFIRM).click()#Confirma
 
 
+
 #Botão metodo de pagamento
     def click_add_cartao(self,cartao,code):
         self.driver.find_element(*self.ADD_METODO_PAGAMENTO).click()
@@ -109,6 +111,9 @@ class UrbanRoutesPage:
         time.sleep(1)
         self.driver.find_element(*self.ADD_FINISH_CARTAO).click()
         self.driver.find_element(*self.CLOSE_BUTTON_CARTAO).click()
+
+    def confirm_cartao(self):
+        return self.driver.find_element(*self.CONFIRM_CARTAO).text
 
 #Adicionar comentario
     def add_comentario(self, comentario):
