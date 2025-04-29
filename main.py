@@ -39,7 +39,7 @@ class TestUrbanRoutes:
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
         time.sleep(2)
-
+        assert routes_page.click_comfort_active()
 
     def test_fill_phone_number(self):
         self.driver.get(data.URBAN_ROUTES_URL)
@@ -48,7 +48,7 @@ class TestUrbanRoutes:
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
         routes_page.click_number_text(data.PHONE_NUMBER)
-
+        assert data.PHONE_NUMBER in routes_page.numero_confirmado()
 
     def test_fill_card(self):
         self.driver.get(data.URBAN_ROUTES_URL)
@@ -69,6 +69,7 @@ class TestUrbanRoutes:
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
         routes_page.add_comentario(data.MESSAGE_FOR_DRIVER)
+        assert data.MESSAGE_FOR_DRIVER in routes_page.coment_confirm()
 
 
 
@@ -79,6 +80,8 @@ class TestUrbanRoutes:
         routes_page.click_taxi_option()
         routes_page.click_comfort_icon()
         routes_page.switch_cobertor()
+        time.sleep(2)
+        assert routes_page.switch_cobertor_active() is True
 
 
     def test_order_2_ice_creams(self):  # Tarefa 5
@@ -102,8 +105,10 @@ class TestUrbanRoutes:
         routes_page.click_number_text(data.PHONE_NUMBER)
         time.sleep(1)
         routes_page.click_add_cartao(data.CARD_NUMBER, data.CARD_CODE)
+        routes_page.add_comentario(data.MESSAGE_FOR_DRIVER)
         time.sleep(1)
         routes_page.call_taxi()
+        assert "Buscar carro" in routes_page.pop_up_show()
 
     @classmethod
     def teardown_class(cls):
