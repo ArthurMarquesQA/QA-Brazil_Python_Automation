@@ -1,8 +1,18 @@
-### Diretrizes de nomenclatura de código
+### Projeto de testes automatizados
 
-- **Nomes de variáveis** são escritos em `snake_case` e descrevem sua finalidade;
-- **Constantes** são escritas em maiúsculas;
-- **Comentários** são usados para explicar blocos importantes de código;
-- A **organização do código** é modular, com blocos de código reutilizáveis importados para onde for necessário;
-- Evite funções de espera (`wait`) desnecessárias que fazem com que o teste seja executado por mais tempo do que o necessário;
-- Siga uma **convenção de nomenclatura** para títulos de teste que começam com `test\_` e fornece uma descrição clara do cenário de teste. Os títulos dos testes são fornecidos no resumo.
+- **Urban Routes**
+    O repertório é realizar e escrever testes automatizados para contemplar todo o processo de solicitação de um táxi no aplicativo Urban Routes
+
+- **O Desafio**
+  Os testes devem cobrir os seguintes itens:
+  1- Definir o endereço;
+  2- Selecionar o plano Comfort;
+  3- Preencher o número de telefone;
+  4- Adicionar um cartão de crédito;
+  5- Escrever um comentário para o motorista;
+  6- Pedir um cobertor e lenços;
+  7- Pedir 2 sorvetes;
+  8- Pedir um táxi com a tarifa "Comfort". A janela modal de busca de carros deve aparecer.
+
+- **Métodos Usados**
+    
