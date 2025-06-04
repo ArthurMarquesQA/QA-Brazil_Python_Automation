@@ -1,5 +1,4 @@
-#Tarefa 2
-# Arquivo com constantes
+# Definição das constantes
 URBAN_ROUTES_URL = 'https://cnt-26c062ea-3842-45c8-8293-bb89c9f11d25.containerhub.tripleten-services.com?lng=pt'
 ADDRESS_FROM = 'East 2nd Street, 601'
 ADDRESS_TO ='1300 1st St'
