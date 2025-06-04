@@ -1,4 +1,4 @@
-#TAREFA 1 Sprint 7 Arthur Marques
+#TAREFA 1 (Não fui o responsavel de escrever esse codigo)
 # Recupera o código do telefone. Não mude
 # O arquivo deve permanecer completamente inalterado
 
