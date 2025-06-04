@@ -1,18 +1,24 @@
-### Projeto de testes automatizados
+Projeto de Testes Automatizados para Urban Routes
+📝 Descrição do Projeto
+Este repositório contém testes automatizados para validar o fluxo completo de solicitação de um táxi no aplicativo Urban Routes, utilizando Selenium com Python.
 
-- **Urban Routes**
-    O repertório é realizar e escrever testes automatizados para contemplar todo o processo de solicitação de um táxi no aplicativo Urban Routes
+🎯 Objetivo
+Automatizar e validar todos os passos do processo de solicitação de táxi no aplicativo Urban Routes, garantindo a qualidade do fluxo principal.
 
-- **O Desafio**
-  Os testes devem cobrir os seguintes itens:
-  1- Definir o endereço;
-  2- Selecionar o plano Comfort;
-  3- Preencher o número de telefone;
-  4- Adicionar um cartão de crédito;
-  5- Escrever um comentário para o motorista;
-  6- Pedir um cobertor e lenços;
-  7- Pedir 2 sorvetes;
-  8- Pedir um táxi com a tarifa "Comfort". A janela modal de busca de carros deve aparecer.
+✅ Funcionalidades Testadas
+Os testes cobrem os seguintes cenários:
 
-- **Métodos Usados**
-    
+Definição do endereço de partida e destino
+Seleção do plano Comfort
+Preenchimento do número de telefone
+Adição de cartão de crédito
+Comentário para o motorista
+Solicitação de itens extras (cobertor, lenços e sorvetes)
+Confirmação da tarifa Comfort
+Verificação da janela modal de busca de carros
+
+🛠 Tecnologias Utilizadas
+Linguagem: Python
+Frameworks: Selenium WebDriver, Pytest
+Navegador: Chrome
+
